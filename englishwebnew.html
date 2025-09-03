@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Test Form</title>
+  <style>
+    /* סגנון כדי שהטופס ייראה טוב בתוך ה-iframe */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #0073aa;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005a87;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h3>Test Save to My English Class</h3>
+  <label>Student ID: <input id="stuId" type="text"></label><br><br>
+  <label>Full Name: <input id="fullName" type="text"></label><br><br>
+  <label>Score: <input id="score" type="number"></label><br><br>
+  <label>Max Score: <input id="maxScore" type="number" value="10"></label><br><br>
+  <button onclick="sendTest()">Send Test</button>
+  <p id="resultArea" class="result"></p>
+</div>
+
+<script>
+  // שימי לב: הקישור כאן יתעדכן לאחר שתפרסי את הקוד החדש
+  const SCRIPT_URL = "הקישור החדש של סקריפט גוגל";
+
+  async function sendTest() {
+    const data = {
+      studentId: document.getElementById("stuId").value,
+      fullName: document.getElementById("fullName").value,
+      exerciseId: "Demo_Test_01",
+      exerciseName: "Demo Test Exercise",
+      domain: "Vocabulary",
+      level: "Beginner",
+      status: "Completed",
+      score: parseInt(document.getElementById("score").value),
+      maxScore: parseInt(document.getElementById("maxScore").value)
+    };
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data) // שינוי לפורמט JSON
+      });
+      const json = await res.json();
+      document.getElementById("resultArea").innerText = "נשמר בהצלחה ✅ " + JSON.stringify(json);
+    } catch (err) {
+      document.getElementById("resultArea").innerText = "שגיאה ❌ " + err;
+    }
+  }
+</script>
+
+</body>
+</html>
